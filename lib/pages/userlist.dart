@@ -29,7 +29,7 @@ class _UserListState extends State<UserList> {
   Widget _getPostList(context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('REST API Example for Post'),
+        title: const Text('List of Users'),
         actions: [
           IconButton(
             onPressed: () {
@@ -49,8 +49,8 @@ class _UserListState extends State<UserList> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: FlutterLogo(size: 72.0),
-                    title: Text(_userModel![index].title.toString()),
-                    subtitle: Text(_userModel![index].body.toString()),
+                    title: Text(_userModel![index].name.toString()),
+                    subtitle: Text(_userModel![index].department.toString()),
                     trailing: IconButton(
                       onPressed: () {
                         Navigator.pushAndRemoveUntil<dynamic>(

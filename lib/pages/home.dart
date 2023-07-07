@@ -34,7 +34,7 @@ class Home extends StatelessWidget {
           //   ),
           // ],
           title: InkWell(
-            child: Text("My App"),
+            child: Text("LCMS"),
             onTap: () {
               //Navigator.pushNamed(context, '/home');
               Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
@@ -81,7 +81,7 @@ class Home extends StatelessWidget {
               },
             ),
             const AboutListTile(
-              icon: Icon(Icons.abc_outlined),
+              icon: Icon(Icons.app_registration_rounded),
               child: Text("About Us"),
               applicationIcon: Icon(Icons.local_play),
               applicationName: 'My First Flutter Application',

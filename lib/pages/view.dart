@@ -26,7 +26,7 @@ class ViewForm extends StatelessWidget {
             SizedBox(width: 1.0), // give it width
 
             Text(
-              posts!.body.toString(),
+              posts!.department.toString(),
               style: TextStyle(fontSize: 10, fontFamily: "bolt-semibold"),
               textAlign: TextAlign.left,
             ),
@@ -66,7 +66,7 @@ class ViewForm extends StatelessWidget {
         title: Text(
           // (userModel != null) ? userModel!.name : posts!.title.toString(),
           // product!.name.toString(),
-          posts!.title.toString(),
+          posts!.name.toString(),
         ),
         actions: [
           IconButton(
@@ -86,6 +86,6 @@ class ViewForm extends StatelessWidget {
         ],
       ),
       body: getPost(context),
-    );;
+    );
   }
 }

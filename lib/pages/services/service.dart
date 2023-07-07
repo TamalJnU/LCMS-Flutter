@@ -13,7 +13,8 @@ class UserService {
 
   Future<List<PostModel>?> getPosts() async {
     try {
-      var url = Uri.parse('http://192.168.20.37:8080/api/posts');
+      //var url = Uri.parse('http://192.168.20.37:8080/api/posts');
+      var url = Uri.parse('http://192.168.31.175:8080/api/users');
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -27,7 +28,7 @@ class UserService {
 
   Future<Void?> createPost(PostModel posts) async {
     try {
-      var url = Uri.parse('http://192.168.20.37:8080/api/posts');
+      var url = Uri.parse('http://192.168.31.175:8080/api/users');
 
       var response = await http.post(url,
       headers: {"Content-Type": "application/json"},
@@ -51,7 +52,7 @@ class UserService {
   Future<void> deletePosts(int? id) async {
     try {
       var url = Uri.parse(
-        'http://192.168.20.37:8080/api/posts' + "/" + '${id}');
+        'http://192.168.31.175:8080/api/users' + "/" + '${id}');
       var response = await http.delete(url);
 
       // Response res = await delete('$apiUrl/$id');

@@ -11,25 +11,41 @@ List<PostModel> postsFromJson(String str) => List<PostModel>.from(json.decode(st
 String postModelToJson(PostModel data) => json.encode(data.toJson());
 
 class PostModel {
-    String? title;
-    String? body;
+    String? name;
+    String? email;
+    String? departmentId;
+    int? department;
+    int? gender;
+    String? password;
     int? id;
 
     PostModel({
-        this.title,
-        this.body,
+        this.name,
+        this.email,
+        this.departmentId,
+        this.department,
+        this.gender,
+        this.password,
         this.id,
     });
 
     factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
-        title: json["title"],
-        body: json["body"],
+        name: json["name"],
+        email: json["email"],
+        departmentId: json["departmentId"],
+        department: json["department"],
+        gender: json["gender"],
+        password: json["password"],
         id: json["id"],
     );
 
     Map<String, dynamic> toJson() => {
-        "title": title,
-        "body": body,
+        "name": name,
+        "email": email,
+        "departmentId": departmentId,
+        "department": department,
+        "gender": gender,
+        "password": password,
         "id": id,
     };
 }

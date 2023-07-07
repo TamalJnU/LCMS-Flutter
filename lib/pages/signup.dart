@@ -46,10 +46,19 @@ class SignupForm extends StatefulWidget {
 class _SignupFormState extends State<SignupForm> {
   final _passKey = GlobalKey<FormFieldState>();
 
+  // String _name = '';
+  // String _email = '';
+  // int _age = -1;
+  // String _maritalStatus = 'single';
+  // int _selectGender = 0;
+  // String _password = '';
+  // bool _termsChecked = true;
+  // int _id = 0;
+
   String _name = '';
   String _email = '';
-  int _age = -1;
-  String _maritalStatus = 'single';
+  String _departmentId = '';
+  int _selectDepartment = 0;
   int _selectGender = 0;
   String _password = '';
   bool _termsChecked = true;
@@ -84,13 +93,53 @@ class _SignupFormState extends State<SignupForm> {
     );
   }
 
+  List<DropdownMenuItem<int>> departmentList = [];
+
+  void loadDepartmentList() {
+    departmentList = [];
+    departmentList.add(
+      DropdownMenuItem(
+        child: Text("Police"),
+        value: 0,
+      ),
+    );
+    departmentList.add(
+      DropdownMenuItem(
+        child: Text("Court"),
+        value: 1,
+      ),
+    );
+    departmentList.add(
+      DropdownMenuItem(
+        child: Text("Judge"),
+        value: 2,
+      ),
+    );
+    departmentList.add(
+      DropdownMenuItem(
+        child: Text("PP"),
+        value: 2,
+      ),
+    );
+    departmentList.add(
+      DropdownMenuItem(
+        child: Text("Jailer"),
+        value: 2,
+      ),
+    );
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     //super.initState();
     if(widget.postmodel2 != null){
-    _name = widget.postmodel2!.title.toString();
-    _email = widget.postmodel2!.body.toString();
+    _name = widget.postmodel2!.name.toString();
+    _email = widget.postmodel2!.email.toString();
+    _departmentId = widget.postmodel2!.departmentId.toString();
+    _selectDepartment = widget.postmodel2!.department.toString() as int;
+    _selectGender = widget.postmodel2!.gender.toString() as int;
+    _password = widget.postmodel2!.email.toString();
+    _termsChecked = widget.postmodel2!.email.toString() as bool;
     _id = widget.postmodel2!.id!;
     }
   }
@@ -169,26 +218,48 @@ class _SignupFormState extends State<SignupForm> {
 
     formWidget.add(
       TextFormField(
+        initialValue: _departmentId,
         decoration: InputDecoration(
-          labelText: 'Enter Age',
-          hintText: 'Age',
+          labelText: 'Enter Department ID',
+          hintText: 'Department ID',
         ),
-        keyboardType: TextInputType.number,
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please enter your age!';
+            return 'Please enter your Department ID!';
           } else {
             return null;
           }
         },
         onChanged: (text) {  
-          _age = int.parse(text.toString()); 
+          //_departmentId = int.parse(text.toString()); 
+          _departmentId = text; 
         },
         // onSaved: (value) {
         //   setState(() {
         //     _age = int.parse(value.toString());
         //   });
         // },
+      ),
+    );
+
+    formWidget.add(
+      TextFormField(
+        initialValue: _selectDepartment as String,
+        decoration: InputDecoration(
+          labelText: 'Enter Department',
+          hintText: 'Department Name',
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter your Department Name!';
+          } else {
+            return null;
+          }
+        },
+        onChanged: (text) {  
+          //_departmentId = int.parse(text.toString()); 
+          _selectDepartment = int.parse(text.toString()); 
+        },
       ),
     );
 
@@ -206,35 +277,36 @@ class _SignupFormState extends State<SignupForm> {
       ),
     );
 
-    formWidget.add(
-      Column(
-        children: <Widget>[
-          RadioListTile<String>(
-            title: Text('Single'),
-            value: 'single',
-            groupValue: _maritalStatus,
-            onChanged: (value) {
-              setState(() {
-                _maritalStatus = value.toString();
-              });
-            },
-          ),
-          RadioListTile<String>(
-            title: Text('Married'),
-            value: 'married',
-            groupValue: _maritalStatus,
-            onChanged: (value) {
-              setState(() {
-                _maritalStatus = value.toString();
-              });
-            },
-          ),
-        ],
-      ),
-    );
+    // formWidget.add(
+    //   Column(
+    //     children: <Widget>[
+    //       RadioListTile<String>(
+    //         title: Text('Single'),
+    //         value: 'single',
+    //         groupValue: _maritalStatus,
+    //         onChanged: (value) {
+    //           setState(() {
+    //             _maritalStatus = value.toString();
+    //           });
+    //         },
+    //       ),
+    //       RadioListTile<String>(
+    //         title: Text('Married'),
+    //         value: 'married',
+    //         groupValue: _maritalStatus,
+    //         onChanged: (value) {
+    //           setState(() {
+    //             _maritalStatus = value.toString();
+    //           });
+    //         },
+    //       ),
+    //     ],
+    //   ),
+    // );
 
     formWidget.add(
       TextFormField(
+        initialValue: _password,
         key: _passKey,
         obscureText: true,
         decoration: InputDecoration(
@@ -255,6 +327,7 @@ class _SignupFormState extends State<SignupForm> {
 
     formWidget.add(
       TextFormField(
+        initialValue: _password,
         obscureText: true,
         decoration: InputDecoration(
           hintText: 'Confirm Password',
@@ -320,7 +393,24 @@ class _SignupFormState extends State<SignupForm> {
 
       print("Name " + _name);
       print("Email " + _email);
-      print("Age " + _age.toString());
+      print("Department Id " + _departmentId);
+      switch (_selectDepartment) {
+        case 0:
+          print("Police");
+          break;
+        case 1:
+          print("Court");
+          break;
+        case 3:
+          print("Judge");
+          break;
+        case 4:
+          print("PP");
+          break;
+        case 5:
+          print("Jailer");
+          break;
+      }
       switch (_selectGender) {
         case 0:
           print("Gender Male");
@@ -332,7 +422,6 @@ class _SignupFormState extends State<SignupForm> {
           print("Gender Others");
           break;
       }
-      print("Marital Status " + _maritalStatus);
       print("Password " + _password);
       print("Termschecked " + _termsChecked.toString());
       ScaffoldMessenger.of(context)
@@ -340,8 +429,12 @@ class _SignupFormState extends State<SignupForm> {
 
 
       PostModel pm = new PostModel();
-      pm.title = _name;
-      pm.body = _email;
+      pm.name = _name;
+      pm.email = _email;
+      pm.departmentId = _departmentId;
+      pm.department = _selectDepartment;
+      pm.gender = _selectGender;
+      pm.password = _password;
       if(widget.postmodel2 != null){
         pm.id = _id;
       }
