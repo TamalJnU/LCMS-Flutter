@@ -33,8 +33,8 @@ class PostModel {
         name: json["name"],
         email: json["email"],
         departmentId: json["departmentId"],
-        department: json["department"],
-        gender: json["gender"],
+        department: int.parse(json["department"]),
+        gender: int.parse(json["gender"]),
         password: json["password"],
         id: json["id"],
     );

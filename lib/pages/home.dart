@@ -101,24 +101,6 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
-      endDrawer: Drawer(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "This is end drawer",
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Close Drawer",
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.email),
         onPressed: () {

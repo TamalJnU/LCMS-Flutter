@@ -1,5 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+import '../main.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -9,10 +16,66 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
+  //static const String idScreen = "login";
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   //bool _isNotValided = false;
+  //late SharedPreferences prefs;
+
+//     @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//     initSharedPref();
+//   }
+
+//   void initSharedPref() async{
+//     prefs = await SharedPreferences.getInstance();
+//   }
+
+//   final String login = 'http://192.168.20.37:8080/api/users';
+
+//   void _login(BuildContext context) async {
+//     if (emailTextEditingController.text.isNotEmpty &&
+//         passwordTextEditingController.text.isNotEmpty) {
+//       var reqBody = {
+//         "email": emailTextEditingController.text,
+//         "password": passwordTextEditingController.text,
+//       };
+
+
+//       var response = await http.post(
+//           Uri.parse(login),
+//           headers: headers,
+//           body: jsonEncode(reqBody)
+//       );
+
+//       if (response.statusCode==200) {
+//         var jsonResponse = jsonDecode(response.body);
+
+//         var myToken = jsonResponse['jwtToken'];
+
+//         final storage = const FlutterSecureStorage();
+// // to save token in local storage
+//         await storage.write(key: 'token', value: myToken);
+
+//         // Navigator.pushAndRemoveUntil<dynamic>(
+//         //   context,
+//         //   MaterialPageRoute<dynamic>(
+//         //     builder: (BuildContext context) =>
+//         //         Home(),
+//         //   ),
+//         //       (route) => false,
+//         // );
+
+//         Navigator.pushNamedAndRemoveUntil(
+//             context, "/home", (route) => false);
+
+//       } else {
+//         print('Something went wrong');
+//       }
+//     }
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +208,10 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+}
+
+loginAndAuthenticateUser(BuildContext context) async {
+
 }
 
 displayToastMessage(String message, BuildContext context) {

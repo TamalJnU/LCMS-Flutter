@@ -16,6 +16,9 @@ class _UserListState extends State<UserList> {
 
   void _getData() async {
     _userModel = (await UserService().getPosts())!;
+    print("----------------");
+        print(_userModel);
+
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -41,7 +44,7 @@ class _UserListState extends State<UserList> {
       ),
       body: _userModel == null || _userModel!.isEmpty
           ? const Center(
-              child: CircularProgressIndicator(),
+              child: const Text('No Data'),
             )
           : Center(
               child: ListView.builder(
@@ -50,7 +53,7 @@ class _UserListState extends State<UserList> {
                   return ListTile(
                     leading: FlutterLogo(size: 72.0),
                     title: Text(_userModel![index].name.toString()),
-                    subtitle: Text(_userModel![index].department.toString()),
+                    subtitle: Text(_userModel![index].email.toString()),
                     trailing: IconButton(
                       onPressed: () {
                         Navigator.pushAndRemoveUntil<dynamic>(

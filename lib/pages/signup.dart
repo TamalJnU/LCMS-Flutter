@@ -118,13 +118,13 @@ class _SignupFormState extends State<SignupForm> {
     departmentList.add(
       DropdownMenuItem(
         child: Text("PP"),
-        value: 2,
+        value: 3,
       ),
     );
     departmentList.add(
       DropdownMenuItem(
         child: Text("Jailer"),
-        value: 2,
+        value: 4,
       ),
     );
   }
@@ -136,10 +136,9 @@ class _SignupFormState extends State<SignupForm> {
     _name = widget.postmodel2!.name.toString();
     _email = widget.postmodel2!.email.toString();
     _departmentId = widget.postmodel2!.departmentId.toString();
-    _selectDepartment = widget.postmodel2!.department.toString() as int;
-    _selectGender = widget.postmodel2!.gender.toString() as int;
-    _password = widget.postmodel2!.email.toString();
-    _termsChecked = widget.postmodel2!.email.toString() as bool;
+    _selectDepartment = widget.postmodel2!.department!;
+    _selectGender = widget.postmodel2!.gender!;
+    _password = widget.postmodel2!.password.toString();
     _id = widget.postmodel2!.id!;
     }
   }
@@ -147,6 +146,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   Widget build(BuildContext context) {
     loadGenderList();
+    loadDepartmentList();
     return Form(
       child: ListView(
         children: getFormWidget(),
@@ -208,11 +208,6 @@ class _SignupFormState extends State<SignupForm> {
         onChanged: (text) {  
           _email = text;  
         },
-        // onSaved: (value) {
-        //   setState(() {
-        //     _email = value.toString();
-        //   });
-        // },
       ),
     );
 
@@ -234,34 +229,24 @@ class _SignupFormState extends State<SignupForm> {
           //_departmentId = int.parse(text.toString()); 
           _departmentId = text; 
         },
-        // onSaved: (value) {
-        //   setState(() {
-        //     _age = int.parse(value.toString());
-        //   });
-        // },
       ),
     );
 
+
     formWidget.add(
-      TextFormField(
-        initialValue: _selectDepartment as String,
-        decoration: InputDecoration(
-          labelText: 'Enter Department',
-          hintText: 'Department Name',
-        ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Please enter your Department Name!';
-          } else {
-            return null;
-          }
+      DropdownButton(
+        hint: Text('Select Department'),
+        items: departmentList,
+        value: _selectDepartment,
+        onChanged: (value) {
+          setState(() {
+            _selectDepartment = int.parse(value.toString());
+          });
         },
-        onChanged: (text) {  
-          //_departmentId = int.parse(text.toString()); 
-          _selectDepartment = int.parse(text.toString()); 
-        },
+        isExpanded: true,
       ),
     );
+
 
     formWidget.add(
       DropdownButton(
@@ -348,11 +333,6 @@ class _SignupFormState extends State<SignupForm> {
         onChanged: (text) {  
           _password = text;  
         },
-        // onSaved: (value) {
-        //   setState(() {
-        //     _password = value.toString();
-        //   });
-        // },
       ),
     );
 
@@ -438,6 +418,11 @@ class _SignupFormState extends State<SignupForm> {
       if(widget.postmodel2 != null){
         pm.id = _id;
       }
+
+
+print("--------Update----------");
+print(pm.toString());
+print(pm.toJson());
 
       
       (await UserService().createPost(pm));

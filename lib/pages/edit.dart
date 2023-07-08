@@ -124,16 +124,16 @@ class _EditState extends State<Edit> {
     _name = widget.postmodel2!.name.toString();
     _email = widget.postmodel2!.email.toString();
     _departmentId = widget.postmodel2!.departmentId.toString();
-    _selectDepartment = widget.postmodel2!.department.toString() as int;
-    _selectGender = widget.postmodel2!.gender.toString() as int;
-    _password = widget.postmodel2!.email.toString();
-    _termsChecked = widget.postmodel2!.email.toString() as bool;
+    _selectDepartment = widget.postmodel2!.department!;
+    _selectGender = widget.postmodel2!.gender!;
+    _password = widget.postmodel2!.password.toString();
     _id = widget.postmodel2!.id!;
   }
 
   @override
   Widget build(BuildContext context) {
     loadGenderList();
+    loadDepartmentList();
     return Form(
       child: ListView(
         children: getFormWidget(),
@@ -220,23 +220,16 @@ class _EditState extends State<Edit> {
     );
 
     formWidget.add(
-      TextFormField(
-        initialValue: _selectDepartment as String,
-        decoration: InputDecoration(
-          labelText: 'Enter Department',
-          hintText: 'Department Name',
-        ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Please enter your Department Name!';
-          } else {
-            return null;
-          }
+      DropdownButton(
+        hint: Text('Select Department'),
+        items: departmentList,
+        value: _selectDepartment,
+        onChanged: (value) {
+          setState(() {
+            _selectDepartment = int.parse(value.toString());
+          });
         },
-        onChanged: (text) {  
-          //_departmentId = int.parse(text.toString()); 
-          _selectDepartment = int.parse(text.toString()); 
-        },
+        isExpanded: true,
       ),
     );
 
@@ -366,7 +359,13 @@ class _EditState extends State<Edit> {
           .showSnackBar(const SnackBar(content: Text('Form Submitted')));
 
 
-      final String url = 'http://192.168.31.175:8080/api/users';
+      final String url = 'http://192.168.20.37:8080/api/users';
+
+
+
+
+
+
       var reqBody = {
         "name" : _name,
         "email" : _email,
@@ -376,18 +375,20 @@ class _EditState extends State<Edit> {
         "password" : _password,
         "id" : _id,
       };
+      print("-----------reqBody-------------");
+      print(reqBody);
 
-      var response = await http.post(Uri.parse(url),
+       await http.post(Uri.parse(url),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody)
       );
 
-      var jsonResponse = jsonDecode(response.body);
-      if(jsonResponse['status']) {
-        print('Data Updated');
-      } else {
-        print('Something went wrong');
-      }
+      // var jsonResponse = jsonDecode(response.body);
+      // if(jsonResponse['status']) {
+      //   print('Data Updated');
+      // } else {
+      //   print('Something went wrong');
+      // }
 
 
       // Navigator.pushAndRemoveUntil<dynamic>(

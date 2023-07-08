@@ -7,16 +7,15 @@ import 'package:http/http.dart' as http;
 import '../models/postModel.dart';
 
 class UserService {
-  Future<List<PostModel>?> getUsers() async {
-
-  }
+  Future<List<PostModel>?> getUsers() async {}
 
   Future<List<PostModel>?> getPosts() async {
     try {
-      //var url = Uri.parse('http://192.168.20.37:8080/api/posts');
-      var url = Uri.parse('http://192.168.31.175:8080/api/users');
+      var url = Uri.parse('http://192.168.20.37:8080/api/users');
+      //var url = Uri.parse('http://192.168.31.175:8080/api/users');
       var response = await http.get(url);
 
+      print(response.body);
       if (response.statusCode == 200) {
         List<PostModel> _model = postsFromJson(response.body);
         return _model;
@@ -28,11 +27,12 @@ class UserService {
 
   Future<Void?> createPost(PostModel posts) async {
     try {
-      var url = Uri.parse('http://192.168.31.175:8080/api/users');
+      var url = Uri.parse('http://192.168.20.37:8080/api/users');
 
-      var response = await http.post(url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(posts),
+      var response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(posts),
       );
 
       // var jsonResponse = jsonDecode(response.body);
@@ -51,8 +51,8 @@ class UserService {
 
   Future<void> deletePosts(int? id) async {
     try {
-      var url = Uri.parse(
-        'http://192.168.31.175:8080/api/users' + "/" + '${id}');
+      var url =
+          Uri.parse('http://192.168.20.37:8080/api/users' + "/" + '${id}');
       var response = await http.delete(url);
 
       // Response res = await delete('$apiUrl/$id');
